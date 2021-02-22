@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Lab2</string>
     <string name="Hello">Lab2</string>
+    <string name="dbFileName">Lab2</string>
 </resources>

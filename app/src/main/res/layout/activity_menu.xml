@@ -15,7 +15,8 @@
         tools:layout_editor_absoluteY="0dp">
 
         <ListView
-            android:id="@+id/listView"
+            tools:listitem="@layout/reminder_item"
+            android:id="@+id/listViewReminder"
             android:layout_width="match_parent"
             android:layout_height="470dp">
 
@@ -46,12 +47,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnNewReminder"
         android:layout_width="wrap_content"
         android:layout_height="61dp"
         android:layout_marginStart="5dp"
         android:baselineAligned="false"
-        android:text="Create a new reminder"
+        android:text="New"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
