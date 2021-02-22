@@ -40,7 +40,7 @@
         android:text="location_x" />
 
     <TextView
-        android:id="@+id/locationX"
+        android:id="@+id/reminderItemLocationX"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -54,7 +54,7 @@
         android:text="location_y" />
 
     <TextView
-        android:id="@+id/locationY"
+        android:id="@+id/reminderItemLocationY"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -68,7 +68,7 @@
         android:text="creation_time" />
 
     <TextView
-        android:id="@+id/creationTime"
+        android:id="@+id/reminderItemCreationTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -82,7 +82,7 @@
         android:text="creator_id" />
 
     <TextView
-        android:id="@+id/creatorId"
+        android:id="@+id/reminderItemCreatorId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -96,7 +96,7 @@
         android:text="reminder_seen" />
 
     <TextView
-        android:id="@+id/reminderSeen"
+        android:id="@+id/reminderItemReminderSeen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

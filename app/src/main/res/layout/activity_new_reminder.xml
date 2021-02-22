@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".NewReminder">
 
+
     <EditText
         android:id="@+id/editTextReminderContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="396dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="248dp"
         android:ems="10"
         android:gravity="center"
         android:hint="Title"
@@ -25,20 +26,19 @@
         android:id="@+id/datePicker"
         android:layout_width="285dp"
         android:layout_height="218dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="16dp"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <Button
         android:id="@+id/btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="468dp"
-        android:layout_marginEnd="88dp"
+        android:layout_marginTop="664dp"
+        android:layout_marginEnd="128dp"
         android:text="Create"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,8 +47,8 @@
         android:id="@+id/btnNewReminderBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="468dp"
-        android:layout_marginEnd="236dp"
+        android:layout_marginTop="664dp"
+        android:layout_marginEnd="240dp"
         android:text="Back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -62,4 +62,34 @@
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextReminderLocationX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="308dp"
+        android:ems="5"
+        android:gravity="center"
+        android:hint="X"
+        android:inputType="number"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextReminderLocationY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="236dp"
+        android:layout_marginTop="308dp"
+        android:ems="5"
+        android:gravity="center"
+        android:hint="Y"
+        android:inputType="number"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,6 +18,11 @@ class ReminderHistoryAdaptor(context: Context, private  val list:List<PaymentInf
         //set payment info values to the list item
         row.reminderItemTitle.text=list[position].title
         row.reminderItemDate.text=list[position].date
+        row.reminderItemLocationX.text=list[position].locationX
+        row.reminderItemLocationY.text=list[position].locationY
+        row.reminderItemCreationTime.text=list[position].creationTime
+        row.reminderItemCreatorId.text=list[position].creatorId
+        row.reminderItemReminderSeen.text=list[position].reminderSeen
         return  row
     }
     override fun getItem(position: Int): Any {

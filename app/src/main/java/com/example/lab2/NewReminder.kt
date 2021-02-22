@@ -14,6 +14,7 @@ import java.util.Calendar
 import java.util.*
 import com.example.lab2.db.AppDatabase
 import com.example.lab2.db.PaymentInfo
+import java.text.SimpleDateFormat
 
 
 //https://tutorialwing.com/android-datepicker-using-kotlin-example/
@@ -27,11 +28,12 @@ class NewReminder : AppCompatActivity() {
         val datePicker = findViewById<DatePicker>(R.id.datePicker)
         val dateText = findViewById<TextView>(R.id.editTextReminderContent)
         val today = Calendar.getInstance()
-        val locationX = findViewById<TextView>(R.id.locationX)
-        val locationY = findViewById<TextView>(R.id.locationY)
-        val creationTime = findViewById<TextView>(R.id.creationTime)
-        val creatorId = findViewById<TextView>(R.id.creatorId)
-        val reminderSeen = findViewById<TextView>(R.id.reminderSeen)
+        val locationXText = findViewById<TextView>(R.id.editTextReminderLocationX)
+        val locationY = findViewById<TextView>(R.id.editTextReminderLocationY)
+
+
+        //val creatorId = findViewById<TextView>(R.id.creatorId)
+        //val reminderSeen = findViewById<TextView>(R.id.reminderSeen)
         Log.d("Lab", "datePicker: $datePicker")
         datePicker.init(
             today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)
@@ -51,18 +53,31 @@ class NewReminder : AppCompatActivity() {
             Log.d("Lab", "Create Button Clicked")
             val dateString = textView.text.toString()
             val titleString = dateText.text.toString()
+            val locationXString = locationXText.text.toString()
+            val curDate = java.util.Calendar.getInstance()
+            val curYear = curDate.get(Calendar.YEAR)
+            val curMonth = curDate.get(Calendar.MONTH) + 1
+            val curDay = curDate.get(Calendar.DAY_OF_MONTH)
+            val curHour = (curDate.get(Calendar.HOUR_OF_DAY)) + 2
+            val curMinute = curDate.get(Calendar.MINUTE)
+            val curSec = curDate.get(Calendar.SECOND)
+            Log.d("Lab", "Aika: $curMonth.$curDay.$curYear")
             Log.d("Lab", "Title: $titleString Date: $dateString")
-            var newReminderIntent = Intent(applicationContext, ManageReminders::class.java)
+            val creationTime = "$curMonth.$curDay.$curYear-$curHour:$curMinute:$curSec"
+            val creatorId = "PlaceholderID"
+            val reminderSeen = "PlaceHolderReminderSeen"
+
+            var newReminderIntent = Intent(applicationContext, MenuActivity::class.java)
 
             val paymentInfo = PaymentInfo(
                 null,
                 title = titleString,
                 date = dateString,
-                location_x = locationX.text.toString(),
-                location_y = locationY.text.toString(),
-                creation_time = creationTime.text.toString(),
-                creator_id = creatorId.text.toString(),
-                reminder_seen = reminderSeen.text.toString()
+                locationX = locationXString,
+                locationY = locationY.text.toString(),
+                creationTime = creationTime.toString(),
+                creatorId = creatorId.toString(),
+                reminderSeen = reminderSeen.toString()
             )
 
 
@@ -116,7 +131,7 @@ class NewReminder : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnNewReminderBack).setOnClickListener {
             Log.d("Lab", "Reminder Back Button Clicked")
-            var newReminderIntent = Intent(applicationContext, ManageReminders::class.java)
+            var newReminderIntent = Intent(applicationContext, MenuActivity::class.java)
             startActivity(newReminderIntent)
         }
     }

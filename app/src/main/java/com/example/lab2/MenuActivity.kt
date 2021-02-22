@@ -47,7 +47,7 @@ class MenuActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.btnNewReminder).setOnClickListener {
             Log.d("Lab", "NewReminder Clicked")
-            var newReminderIntent = Intent(applicationContext, ManageReminders::class.java)
+            var newReminderIntent = Intent(applicationContext, NewReminder::class.java)
             startActivity(newReminderIntent)
         }
 

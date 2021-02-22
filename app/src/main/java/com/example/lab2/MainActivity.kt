@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
             stringName = editTextName.text.toString()
             stringPw = editTextPw.text.toString()
 
-            val corrName: String = sharedPref.getString("Name", "Mikael") ?: "Not Set"
-            val corrPw: String = sharedPref.getString("Password", "12345") ?: "Not Set"
+            val corrName: String = sharedPref.getString("Name", "a") ?: "Not Set"
+            val corrPw: String = sharedPref.getString("Password", "a") ?: "Not Set"
 
             Log.d("Lab", "corrName: $corrName")
             //Log.d("Lab", "Username: $stringName")
