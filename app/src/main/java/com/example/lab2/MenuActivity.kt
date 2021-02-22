@@ -5,13 +5,11 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import androidx.room.Room
 import com.example.lab2.db.AppDatabase
 import com.example.lab2.db.PaymentInfo
+
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var listView: ListView
@@ -50,7 +48,28 @@ class MenuActivity : AppCompatActivity() {
             var newReminderIntent = Intent(applicationContext, NewReminder::class.java)
             startActivity(newReminderIntent)
         }
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, id ->
+            //retrieve selected Item
+            val EXTRA_TITLE = "This is extra title"
 
+            val selectedReminder = listView.adapter.getItem(position) as PaymentInfo
+            val msgUid = selectedReminder.uid.toString()
+            val msgTitle = selectedReminder.title
+            val msgDate = selectedReminder.date
+            val msgLocationX = selectedReminder.locationX
+            val msgLocationY = selectedReminder.locationY
+
+            Log.d("Lab", "Selected: $selectedReminder title: $msgTitle")
+            val editReminderIntent = Intent(this, EditReminder::class.java).apply{
+                putExtra("EXTRA_UID", msgUid);
+                putExtra("EXTRA_TITLE", msgTitle);
+                putExtra("EXTRA_DATE", msgDate);
+                putExtra("EXTRA_LOCATION_X", msgLocationX);
+                putExtra("EXTRA_LOCATION_Y", msgLocationY);
+            }
+            //editReminderIntent.putExtra(EXTRA_TITLE, msgTitle)
+            startActivity(editReminderIntent)
+        }
     }
     override fun onResume() {
         super.onResume()

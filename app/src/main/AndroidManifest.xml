@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab2">
-        <activity android:name=".NewReminder"></activity>
+        <activity android:name=".EditReminder"></activity>
+        <activity android:name=".NewReminder" />
         <activity android:name=".ManageReminders" />
         <activity android:name=".user_settings" />
         <activity android:name=".MenuActivity" />
