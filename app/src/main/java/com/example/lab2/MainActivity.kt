@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnLogin).setOnClickListener {
             //Log.d("Lab", "Menu Button Clicked")
-            var menuIntent = Intent(applicationContext, MenuActivity::class.java)
+
             stringName = editTextName.text.toString()
             stringPw = editTextPw.text.toString()
 
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             //Log.d("Lab", "Username: $stringName")
             //Log.d("Lab", "Pw: $stringPw")
             if (corrName == stringName && (corrPw == stringPw)){
+                val menuIntent = Intent(applicationContext, MenuActivity::class.java)
                 startActivity(menuIntent)
             }else{
                 Toast.makeText(this, "Username or password is incorrect, please try again!",Toast.LENGTH_LONG).show()
