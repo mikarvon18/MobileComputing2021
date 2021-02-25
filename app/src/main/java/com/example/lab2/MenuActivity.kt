@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.room.Room
 import com.example.lab2.db.AppDatabase
 import com.example.lab2.db.PaymentInfo
+import kotlin.reflect.typeOf
 
 
 class MenuActivity : AppCompatActivity() {
@@ -45,7 +46,7 @@ class MenuActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.btnNewReminder).setOnClickListener {
             Log.d("Lab", "NewReminder Clicked")
-            var newReminderIntent = Intent(applicationContext, NewReminder::class.java)
+            var newReminderIntent = Intent(this, NewReminder::class.java)
             startActivity(newReminderIntent)
         }
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, id ->
@@ -58,16 +59,18 @@ class MenuActivity : AppCompatActivity() {
             val msgDate = selectedReminder.date
             val msgLocationX = selectedReminder.locationX
             val msgLocationY = selectedReminder.locationY
+            val pos = position.toString()
 
-            Log.d("Lab", "Selected: $selectedReminder title: $msgTitle")
+            Log.d("Lab", "Selected: $selectedReminder title: $msgTitle, pos: $pos")
             val editReminderIntent = Intent(this, EditReminder::class.java).apply{
                 putExtra("EXTRA_UID", msgUid);
                 putExtra("EXTRA_TITLE", msgTitle);
                 putExtra("EXTRA_DATE", msgDate);
                 putExtra("EXTRA_LOCATION_X", msgLocationX);
                 putExtra("EXTRA_LOCATION_Y", msgLocationY);
+                putExtra("EXTRA_POSITION", pos);
             }
-            //editReminderIntent.putExtra(EXTRA_TITLE, msgTitle)
+            //editReminderIntent.putStringArrayListExtra("EXTRA_POSITION", selectedReminder)
             startActivity(editReminderIntent)
         }
     }

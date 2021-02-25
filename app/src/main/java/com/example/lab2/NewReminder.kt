@@ -14,7 +14,6 @@ import java.util.Calendar
 import java.util.*
 import com.example.lab2.db.AppDatabase
 import com.example.lab2.db.PaymentInfo
-import java.text.SimpleDateFormat
 
 
 //https://tutorialwing.com/android-datepicker-using-kotlin-example/
