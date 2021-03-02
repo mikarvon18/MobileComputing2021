@@ -94,7 +94,7 @@ class EditReminder : AppCompatActivity() {
 
 
 
-
+            MenuActivity.cancelReminder(applicationContext,msgUid!!)
             var mainIntent = Intent(applicationContext, MenuActivity::class.java)
             startActivity(mainIntent)
         }

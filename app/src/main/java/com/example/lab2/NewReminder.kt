@@ -33,7 +33,7 @@ class NewReminder : AppCompatActivity() {
 
         //val creatorId = findViewById<TextView>(R.id.creatorId)
         //val reminderSeen = findViewById<TextView>(R.id.reminderSeen)
-        Log.d("Lab", "datePicker: $datePicker")
+        //Log.d("Lab", "datePicker: $datePicker")
         datePicker.init(
             today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)
 
@@ -60,8 +60,8 @@ class NewReminder : AppCompatActivity() {
             val curHour = (curDate.get(Calendar.HOUR_OF_DAY)) + 2
             val curMinute = curDate.get(Calendar.MINUTE)
             val curSec = curDate.get(Calendar.SECOND)
-            Log.d("Lab", "Aika: $curMonth.$curDay.$curYear")
-            Log.d("Lab", "Title: $titleString Date: $dateString")
+            //Log.d("Lab", "Aika: $curMonth.$curDay.$curYear")
+            //Log.d("Lab", "Title: $titleString Date: $dateString")
             val creationTime = "$curMonth.$curDay.$curYear-$curHour:$curMinute:$curSec"
             val creatorId = "PlaceholderID"
             val reminderSeen = "PlaceHolderReminderSeen"
@@ -102,18 +102,27 @@ class NewReminder : AppCompatActivity() {
                 val uuid = db.paymentDao().insert(paymentInfo).toInt()
                 db.close()
 
+                //notification will appear at the day of the reminder
+                var timeLeft: Long = (paymentCalender.timeInMillis - today.timeInMillis) - 7200000
+                //to make the notification appear at 10am instead of midnight
+                timeLeft += 36000000
+                timeLeft = 10000
+                Log.d("Lab", "Time left: $timeLeft")
                 // payment happens in the future set reminder
                 if (paymentCalender.timeInMillis > Calendar.getInstance().timeInMillis) {
                     // payment happens in the future set reminder
                     val message =
-                        "Reminder: ${paymentInfo.title}  Date: ${paymentInfo.title}"
-                    /*
-                    MenuActivity.setReminder(
+                        "Reminder: ${paymentInfo.title}  Date: $dateString"
+                    //Log.d("Lab", "Menuactivity.setreminder $message, PaymentCalendar time in millis: ${paymentCalender.timeInMillis}")
+                    //paymentCalender.timeInMillis = 100000000
+                    //Log.d("Lab", "Menuactivity.setreminder $message, PaymentCalendar time in millis: ${paymentCalender.timeInMillis}")
+                    MenuActivity.setReminderWithWorkManager(
+
                         applicationContext,
                         uuid,
-                        paymentCalender.timeInMillis,
+                            timeLeft, //timeLeft,paymentCalender.timeInMillis,
                         message
-                    )*/
+                    )
                 }
             }
 

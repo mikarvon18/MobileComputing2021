@@ -1,19 +1,38 @@
 package com.example.lab2
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import androidx.room.Room
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.lab2.db.AppDatabase
 import com.example.lab2.db.PaymentInfo
+import kotlinx.android.synthetic.main.reminder_item.view.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 import kotlin.reflect.typeOf
+
 
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var listView: ListView
+    var viewAll = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -49,6 +68,16 @@ class MenuActivity : AppCompatActivity() {
             var newReminderIntent = Intent(this, NewReminder::class.java)
             startActivity(newReminderIntent)
         }
+        findViewById<Button>(R.id.btnViewAll).setOnClickListener {
+
+            if (viewAll == 0) {
+                viewAll = 1
+            } else {
+                viewAll = 0
+            }
+            Log.d("Lab", "ViewAll Button Clicked, value: $viewAll")
+            refreshListView()
+        }
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, id ->
             //retrieve selected Item
             val EXTRA_TITLE = "This is extra title"
@@ -83,6 +112,7 @@ class MenuActivity : AppCompatActivity() {
         refreshTask.execute()
     }
     inner class LoadReminderInfoEntries : AsyncTask<String?, String?, List<PaymentInfo>>(){
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun doInBackground(vararg params: String?): List <PaymentInfo> {
             val db = Room
                 .databaseBuilder(
@@ -91,12 +121,44 @@ class MenuActivity : AppCompatActivity() {
                     getString(R.string.dbFileName)
                 )
                 .build()
-            val paymentInfos = db.paymentDao().getPaymentInfos()
+
             db.close()
-            return paymentInfos
+            var current = LocalDateTime.now()
+            val currentFormatted = current.format(DateTimeFormatter.ISO_DATE)
+            //Log.d("Lab", "current: $current, formatted: $currentFormatted")
+            val dateparts = currentFormatted.split("-").toTypedArray()
+            val thisYear = dateparts[0].toInt()
+            val thisMonth = dateparts[1].toInt()
+            val thisDay = dateparts[2].toInt() + 1
+            val newDate = SimpleDateFormat("dd-MM-yyyy").parse("$thisDay-$thisMonth-$thisYear")
+            //Log.d("Lab", "day: $thisDay, month: $thisMonth, year: $thisYear, date: ${newDate.time}")
+            val paymentInfos = db.paymentDao().getPaymentInfos()
+            //Log.d("Lab", "paymentInfos in LoadReminderInfoEntries: $paymentInfos")
+            //todo: return only infos which have date in the past or the current date
+            var newPaymentInfos = listOf<PaymentInfo>()
+            //val current = LocalDateTime.now()
+            for (item in paymentInfos){
+                val itemDateparts = item.date.split(".").toTypedArray()
+                val itemDay = itemDateparts[0].toInt()
+                val itemMonth = itemDateparts[1].toInt()
+                val itemYear = itemDateparts[2].toInt()
+                val itemDate = SimpleDateFormat("dd-MM-yyyy").parse("$itemDay-$itemMonth-$itemYear")
+                //Log.d("Lab", "newDate: ${newDate.time},  itemDate: ${itemDate.time}, $newDate $itemDate")
+                if (itemDate.time < newDate.time) {
+                    newPaymentInfos += item
+                }
+            }
+            //Log.d("Lab", "newPaymentInfos:  $newPaymentInfos")
+            if (viewAll == 0) {
+                return newPaymentInfos
+            } else {
+                return paymentInfos
+            }
+            return newPaymentInfos
         }
         override fun onPostExecute(paymentInfos: List<PaymentInfo>?){
             super.onPostExecute(paymentInfos)
+
             if (paymentInfos != null){
                 if (paymentInfos.isNotEmpty()){
                     val adaptor = ReminderHistoryAdaptor(applicationContext, paymentInfos)
@@ -108,8 +170,10 @@ class MenuActivity : AppCompatActivity() {
             }
         }
     }
-    /*
+
     companion object {
+        //val paymenthistoryList = mutableListOf<PaymentInfo>()
+
         fun showNofitication(context: Context, message: String) {
 
             val CHANNEL_ID = "BANKING_APP_NOTIFICATION_CHANNEL"
@@ -140,10 +204,38 @@ class MenuActivity : AppCompatActivity() {
             }
 
             notificationManager.notify(notificationId, notificationBuilder.build())
+            Log.d("Lab", "Notify!")
+
 
         }
 
-        fun setRemnder(context: Context, uid: Int, timeInMillis: Long, message: String) {
+        fun setReminderWithWorkManager(
+            context: Context,
+            uid: Int,
+            timeInMillis: Long,
+            message: String
+        ) {
+            Log.d("Lab", "Time in millis: $timeInMillis")
+            val reminderParameters = Data.Builder()
+                .putString("message", message)
+                .putInt("uid", uid)
+                .build()
+
+            // get minutes from now until reminder
+            var minutesFromNow = 0L
+            if (timeInMillis > System.currentTimeMillis())
+                Log.d("Lab", "if (timeInMillis > System.currentTimeMillis())")
+                minutesFromNow = timeInMillis - System.currentTimeMillis()
+
+            val reminderRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
+                .setInputData(reminderParameters)
+                    .setInitialDelay(timeInMillis, TimeUnit.MILLISECONDS)//.setInitialDelay(minutesFromNow, TimeUnit.MILLISECONDS)
+                .build()
+
+            WorkManager.getInstance(context).enqueue(reminderRequest)
+        }
+
+        fun setReminder(context: Context, uid: Int, timeInMillis: Long, message: String) {
             val intent = Intent(context, ReminderReceiver::class.java)
             intent.putExtra("uid", uid)
             intent.putExtra("message", message)
@@ -172,5 +264,5 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
-     */
+
 }

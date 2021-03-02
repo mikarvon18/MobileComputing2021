@@ -19,6 +19,9 @@ interface PaymentDao {
     @Query("SELECT * FROM paymentInfo")
     fun getPaymentInfos(): List<PaymentInfo>
 
+    @Query("SELECT * FROM paymentInfo WHERE date=:date")
+    fun getLimitedPaymentInfos(date: String): List<PaymentInfo>
+
     @Query("SELECT * FROM paymentInfo WHERE uid = :id")
     fun getPaymentInfo(id: Int): List<PaymentInfo>
 
