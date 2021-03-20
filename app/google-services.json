@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "922328317485",
+    "firebase_url": "https://mobcomp2021-default-rtdb.firebaseio.com/location",
+    "project_id": "mobcomp2021",
+    "storage_bucket": "mobcomp2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922328317485:android:eb9ba9c7d34c683fc442a4",
+        "android_client_info": {
+          "package_name": "com.example.lab2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922328317485-vq9d6v142f9pi7jbj6ra80k7l5hvomcq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdsfPn12TR2flOVtmUqqW6GY6qjNtk-io"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922328317485-vq9d6v142f9pi7jbj6ra80k7l5hvomcq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

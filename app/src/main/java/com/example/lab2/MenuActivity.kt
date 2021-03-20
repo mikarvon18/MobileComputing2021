@@ -20,6 +20,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.lab2.db.AppDatabase
 import com.example.lab2.db.PaymentInfo
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.reminder_item.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -233,6 +234,20 @@ class MenuActivity : AppCompatActivity() {
                 .build()
 
             WorkManager.getInstance(context).enqueue(reminderRequest)
+        }
+        fun setLocationBasedReminder(
+            context: Context,
+            uid: Int,
+            coords: LatLng,
+            message: String
+        ){
+            Log.d("Lab", "Setting up coordinates based reminder: context: $context, uid: $uid, coords: $coords, message: $message")
+            val reminderParameters = Data.Builder()
+                .putString("message", message)
+                .putInt("uid", uid)
+                .build()
+            val reminderRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
+                .setInputData(reminderParameters)
         }
 
         fun setReminder(context: Context, uid: Int, timeInMillis: Long, message: String) {

@@ -15,6 +15,32 @@ import java.util.*
 //https://developer.android.com/training/basics/firstapp/starting-activity
 class EditReminder : AppCompatActivity() {
     var msgUid: Int = 0
+    private val SECOND_ACTIVITY_REQUEST_CODE = 0
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                // get String data from Intent
+                val returnString = data?.getStringExtra(Intent.EXTRA_TEXT)
+                //val newLocation = data.get
+
+                val dateparts = returnString?.split(",")?.toTypedArray()
+                val locLat = dateparts?.get(0)?.toFloat()
+                val locLong = dateparts?.get(1)?.toFloat()
+                val locLatView = findViewById<TextView>(R.id.editReminderLocationX)
+                locLatView.text = locLat.toString()
+                val locLngView = findViewById<TextView>(R.id.editReminderLocationY)
+                locLngView.text = locLong.toString()
+
+                Log.d("Lab", "Location in EditReminder onActivityResult: $returnString, $locLat, $locLong")
+
+
+                //Log.d("Lab", "Location in NewReminder onActivityResult: $returnString")
+            }
+        }
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_reminder)
@@ -32,9 +58,9 @@ class EditReminder : AppCompatActivity() {
         val locationXTextView = findViewById<TextView>(R.id.editReminderLocationX)
         val locationYTextView = findViewById<TextView>(R.id.editReminderLocationY)
         titleTextView.text = msgTitle.toString()
-        val tempLocX = msgLocationX.toInt()
+        val tempLocX = msgLocationX.toFloat()
 
-        locationXTextView.text = Integer.toString(tempLocX)
+        locationXTextView.text = msgLocationX.toString()
         locationYTextView.text = msgLocationY.toString()
 
 
@@ -75,7 +101,15 @@ class EditReminder : AppCompatActivity() {
             dateTextView.text = msg
 
         }
+        findViewById<Button>(R.id.btnEditLocation).setOnClickListener {
+            Log.d("Lab", "Reminder Back Button Clicked")
+            val locationXTextView = findViewById<TextView>(R.id.editReminderLocationX)
+            val locationYTextView = findViewById<TextView>(R.id.editReminderLocationY)
+            var newSetLocationIntent = Intent(applicationContext, MapsActivity::class.java)
 
+            intent.putExtra(Intent.EXTRA_TEXT, "LatLng(${locationXTextView.text}, ${locationYTextView.text})")
+            startActivityForResult(newSetLocationIntent, SECOND_ACTIVITY_REQUEST_CODE)
+        }
         findViewById<Button>(R.id.btnEditReminderDelete).setOnClickListener {
             Log.d("Lab", "Delete Button Clicked")
 

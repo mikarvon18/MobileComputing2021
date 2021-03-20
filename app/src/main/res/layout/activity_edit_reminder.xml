@@ -68,7 +68,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/editReminderLocationX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,14 +76,12 @@
         android:layout_marginTop="412dp"
         android:ems="5"
         android:gravity="center"
-        android:hint="X"
-        android:inputType="number"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/editReminderLocationY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,10 +89,18 @@
         android:layout_marginTop="412dp"
         android:ems="5"
         android:gravity="center"
-        android:hint="Y"
-        android:inputType="number"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnEditLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:layout_marginBottom="176dp"
+        android:text="Select New Location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

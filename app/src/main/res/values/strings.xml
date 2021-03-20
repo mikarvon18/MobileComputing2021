@@ -2,4 +2,9 @@
     <string name="app_name">Lab2</string>
     <string name="Hello">Lab2</string>
     <string name="dbFileName">Lab2</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="dropped_pin">Dropped Pin</string>
+    <string name="poi">poi</string>
+
+    <string name="firebase_db_url">https://lateral-vision-303710-default-rtdb.europe-west1.firebasedatabase.app/</string>
 </resources>
