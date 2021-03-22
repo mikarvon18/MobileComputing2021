@@ -205,7 +205,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val context = applicationContext
             val thisContext = this
             //MapsActivity.createGeoFence()
-            //createGeoFence(latlng, key!!, geofencingClient, context, thisContext)
+            createGeoFence(latlng, key!!, geofencingClient, context, thisContext)
 
 
         }
@@ -334,15 +334,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
     companion object {
-        fun createGeoFence(locationString: String, key: String, geofencingClient: GeofencingClient, context: Context, thisContext: Context) {
+        fun createGeoFence(latLng: LatLng, key: String, geofencingClient: GeofencingClient, context: Context, thisContext: Context) {
             Log.d("Lab", "CreateGeoFence called!")
-            val dateparts = locationString.split(",").toTypedArray()
-            val locLat = dateparts.get(0).toDouble()
-            val locLong = dateparts.get(1).toDouble()
+            //val dateparts = locationString.split(",").toTypedArray()
+            //val locLat = dateparts.get(0).toDouble()
+            //val locLong = dateparts.get(1).toDouble()
             val geofence = Geofence.Builder()
                     .setRequestId(GEOFENCE_ID)
                     //.setCircularRegion(location.latitude, location.longitude, GEOFENCE_RADIUS.toFloat())
-                    .setCircularRegion(locLat, locLong, GEOFENCE_RADIUS.toFloat())
+                    .setCircularRegion(latLng.latitude, latLng.longitude, GEOFENCE_RADIUS.toFloat())
                     .setExpirationDuration(GEOFENCE_EXPIRATION.toLong())
                     .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_DWELL)
                     .setLoiteringDelay(GEOFENCE_DWELL_DELAY)
@@ -355,7 +355,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             val intent = Intent(thisContext, GeofenceReceiver::class.java)
                     .putExtra("key", key)
-                    .putExtra("message", "Geofence alert - ${locLat}, ${locLong}")
+                    .putExtra("message", "Geofence alert - ${latLng.latitude}, ${latLng.longitude}")
 
             val pendingIntent = PendingIntent.getBroadcast(
                     context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT

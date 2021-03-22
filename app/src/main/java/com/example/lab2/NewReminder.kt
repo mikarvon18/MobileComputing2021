@@ -188,7 +188,7 @@ class NewReminder : AppCompatActivity() {
             //createNewGeoFence(returnString)
             val context = applicationContext
             val thisContext = this
-            MapsActivity.createGeoFence(returnString, key!!, geofencingClient, context, thisContext)
+            //MapsActivity.createGeoFence(returnString, key!!, geofencingClient, context, thisContext)
             finish()
             startActivity(newReminderIntent)
         }
